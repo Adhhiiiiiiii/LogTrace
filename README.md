@@ -99,16 +99,15 @@ This tool provides:
 
 ---
 
-## 📸 Sample Dashboard (Optional)
+## 📸 Sample Dashboard
 
 > You can add images like:
 >
-> * Event timeline plot
-> * Anomaly detection table
+> * ![Event Timeline](./screenshot/Event%20&%20Timeline.jpeg)
+> * 
 > * ![Alerts & Anomalies](./screenshot/Alerts%20&%20Anomalies.jpeg)
-> * Geo-location map
-
-![Alerts & Anomalies](./screenshot/Alerts%20&%20Anomalies.jpeg)
+> * 
+> * ![Geo-location](./screenshot/Geo%20&%20location.jpeg)
 
 ## 📜 License
 
