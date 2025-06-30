@@ -120,7 +120,3 @@ This tool provides:
 **\[Your Name]**
 GitHub: [@Adhhiiiiiiii](https://github.com/Adhhiiiiiiii)
 Email: [adhiyaman.b@outlook.com](adhiyaman.b@outlook.com)
-
----
-
-Would you like me to generate badges for Python version, license, Streamlit app status, etc., or help you prepare this for deployment on **Streamlit Cloud** or **Docker**?
