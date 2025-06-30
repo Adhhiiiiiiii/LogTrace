@@ -103,9 +103,9 @@ This tool provides:
 
 > You can add images like:
 >
-> * ![Event Timeline](./screenshot/Event%20&%20Timeline.jpeg)
+> * ![Event Timeline](./screenshot/Event%20%Timeline.jpeg)
 > * 
-> * ![Alerts & Anomalies](./screenshot/Alerts%20&%20Anomalies.jpeg)
+> * ![Alerts & Anomalies](./screenshot/Alerts%20%Anomalies.jpeg)
 > * 
 > * ![Geo-location](./screenshot/Geo%20&%20location.jpeg)
 
