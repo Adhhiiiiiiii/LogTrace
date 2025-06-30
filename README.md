@@ -101,12 +101,14 @@ This tool provides:
 
 ## 📸 Sample Dashboard
 
-> You can add images like:
+> Event Timeline:
 >
 > * ![Event Timeline](./screenshot/Event%20Timeline.jpeg)
->   
+>
+> Alerts & Anomalies:
 > * ![Alerts & Anomalies](./screenshot/Alerts%20%26%20Anomalies.jpeg)
->   
+>
+> Geo-location:
 > * ![Geo-location](./screenshot/Geo%20%26%20location.jpeg)
 
 
