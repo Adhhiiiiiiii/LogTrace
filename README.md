@@ -105,6 +105,7 @@ This tool provides:
 >
 > * Event timeline plot
 > * Anomaly detection table
+> * ![Alerts & Anomalies](./screenshot/Alerts & Anomalies.jpeg)
 > * Geo-location map
 
 ---
