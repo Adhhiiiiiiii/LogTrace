@@ -117,6 +117,6 @@ This tool provides:
 
 ## 👨‍💻 Author
 
-**\[Your Name]**
+**\Adhiyaman Babu**
 GitHub: [@Adhhiiiiiiii](https://github.com/Adhhiiiiiiii)
 Email: [adhiyaman.b@outlook.com](adhiyaman.b@outlook.com)
