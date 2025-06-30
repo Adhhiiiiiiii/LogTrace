@@ -103,13 +103,13 @@ This tool provides:
 
 > Event Timeline:
 >
-> * ![Event Timeline](./screenshot/Event%20Timeline.jpeg)
+> ![Event Timeline](./screenshot/Event%20Timeline.jpeg)
 >
 > Alerts & Anomalies:
-> * ![Alerts & Anomalies](./screenshot/Alerts%20%26%20Anomalies.jpeg)
+> ![Alerts & Anomalies](./screenshot/Alerts%20%26%20Anomalies.jpeg)
 >
 > Geo-location:
-> * ![Geo-location](./screenshot/Geo%20%26%20location.jpeg)
+> ![Geo-location](./screenshot/Geo-location.jpeg)
 
 
 ## 📜 License
