@@ -105,16 +105,6 @@ This tool provides:
 >
 > * Event timeline plot
 > * Anomaly detection table
-> * ![Alerts & Anomalies](./screenshot/Alerts & Anomalies.jpeg)
-> * Geo-location map
-![Alerts & Anomalies](./screenshot/Alerts & Anomalies.jpeg)
----
-## 📸 Sample Dashboard (Optional)
-
-> You can add images like:
->
-> * Event timeline plot
-> * Anomaly detection table
 > * ![Alerts & Anomalies](./screenshot/Alerts%20&%20Anomalies.jpeg)
 > * Geo-location map
 
@@ -128,6 +118,8 @@ This tool provides:
 
 ## 👨‍💻 Author
 
-## **Adhiyaman Babu**
-GitHub: [@Adhhiiiiiiii](https://github.com/Adhhiiiiiiii)
-Email: [adhiyaman.b@outlook.com](adhiyaman.b@outlook.com)
+### **Adhiyaman Babu**
+
+- GitHub: [@Adhhiiiiiiii](https://github.com/Adhhiiiiiiii)
+- Email: [adhiyaman.b@outlook.com](mailto:adhiyaman.b@outlook.com)
+
