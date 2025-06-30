@@ -101,8 +101,6 @@ This tool provides:
 
 ## 📸 Sample Dashboard
 
-You can add images like:
-
 ### 🔹 **Event Timeline**
 ![Event Timeline](./screenshot/Event%20Timeline.jpeg)
 
