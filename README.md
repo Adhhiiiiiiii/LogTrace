@@ -105,7 +105,7 @@ This tool provides:
 >
 > * ![Event Timeline](./screenshot/Event%20%Timeline.jpeg)
 > * 
-> * ![Alerts & Anomalies](./screenshot/Alerts%20%Anomalies.jpeg)
+> * ![Alerts & Anomalies](./screenshot/Alerts%20%&%20%Anomalies.jpeg)
 > * 
 > * ![Geo-location](./screenshot/Geo%20&%20location.jpeg)
 
