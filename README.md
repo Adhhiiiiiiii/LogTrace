@@ -107,7 +107,7 @@ This tool provides:
 > * Anomaly detection table
 > * ![Alerts & Anomalies](./screenshot/Alerts & Anomalies.jpeg)
 > * Geo-location map
-
+![Alerts & Anomalies](./screenshot/Alerts & Anomalies.jpeg)
 ---
 
 ## 📜 License
