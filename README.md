@@ -118,8 +118,8 @@ This tool provides:
 ## 👨‍💻 Author
 
 **\[Your Name]**
-GitHub: [@yourusername](https://github.com/yourusername)
-Email: [your.email@example.com](mailto:your.email@example.com)
+GitHub: [@Adhhiiiiiiii](https://github.com/Adhhiiiiiiii)
+Email: [adhiyaman.b@outlook.com](adhiyaman.b@outlook.com)
 
 ---
 
