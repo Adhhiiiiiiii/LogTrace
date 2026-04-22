@@ -1,11 +1,15 @@
 import streamlit as st
 import pandas as pd
-import re, io, json
+import re, io, json, os
 import matplotlib.pyplot as plt
 import plotly.express as px
 from sklearn.ensemble import IsolationForest
 from scipy import stats
 import requests
+
+# ----------- CONFIG -----------
+
+SAMPLE_DIR = "Sample Files"  # change to Sample_Files if you rename folder
 
 # ----------- Helper Functions -----------
 
@@ -36,7 +40,7 @@ def ip_to_geo(ip):
     except:
         return None, None, None, None
 
-# ----------- Streamlit UI -----------
+# ----------- UI -----------
 
 st.set_page_config(page_title="Log Visualizer", layout="wide")
 st.title("🔍 Enhanced Log Visualizer & Analyzer")
@@ -44,22 +48,37 @@ st.title("🔍 Enhanced Log Visualizer & Analyzer")
 # ----------- INPUT SECTION -----------
 
 uploads = st.file_uploader("Upload .txt/.vlog files", ["txt", "vlog"], accept_multiple_files=True)
-use_demo = st.checkbox("Use Demo Sample File")
+use_demo = st.checkbox("Use Demo Mode")
 
 files_to_process = []
+
+# ----------- DEMO MODE -----------
 
 if uploads:
     files_to_process = uploads
 
 elif use_demo:
     try:
-        with open("Sample Files/file.vlog", "r") as f:
+        sample_files = [f for f in os.listdir(SAMPLE_DIR) if f.endswith(".vlog")]
+
+        if not sample_files:
+            st.error("No sample files found in Sample Files directory.")
+            st.stop()
+
+        selected_file = st.selectbox("Select a demo file", sample_files)
+
+        file_path = os.path.join(SAMPLE_DIR, selected_file)
+
+        with open(file_path, "r") as f:
             demo_content = f.read()
+
         files_to_process = [io.StringIO(demo_content)]
-        st.info("Using demo sample file from repository.")
+        st.success(f"Loaded demo file: {selected_file}")
+
     except Exception as e:
-        st.error(f"Failed to load demo file: {e}")
+        st.error(f"Demo loading failed: {e}")
         st.stop()
+
 else:
     st.info("Upload a file or enable demo mode.")
     st.stop()
