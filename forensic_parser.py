@@ -82,7 +82,8 @@ else:
 
 # ----------- PARSING -----------
 
-data = []
+valid_data = []
+invalid_lines = []
 
 for f in files_to_process:
     if hasattr(f, "name"):
@@ -94,16 +95,41 @@ for f in files_to_process:
 
     for line in content.splitlines():
         parsed = parse_line(line, log_type)
-        if parsed["timestamp"]:
-            data.append(parsed)
 
-df = pd.DataFrame(data)
+        if parsed["timestamp"]:
+            valid_data.append(parsed)
+        else:
+            invalid_lines.append(line)
+
+df = pd.DataFrame(valid_data)
+
+# ----------- CORRUPTION ANALYSIS -----------
+
+total_lines = len(valid_data) + len(invalid_lines)
+
+if invalid_lines:
+    st.warning(f"{len(invalid_lines)} malformed log lines detected out of {total_lines}.")
+
+    corruption_ratio = len(invalid_lines) / total_lines if total_lines > 0 else 0
+
+    if corruption_ratio > 0.5:
+        st.error("🚨 High corruption rate detected — possible log tampering or incompatible format.")
+
+    with st.expander("View malformed log entries"):
+        st.code("\n".join(invalid_lines[:50]), language="text")
+
+# ----------- EMPTY CHECK -----------
 
 if df.empty:
-    st.warning("No valid log entries found.")
+    st.error("No valid structured logs found.")
+
+    if invalid_lines:
+        st.subheader("Raw Log Preview (Unparsed Data)")
+        st.code("\n".join(invalid_lines[:100]), language="text")
+
     st.stop()
 
-# ----------- TIMESTAMP CLEANING (CRITICAL FIX) -----------
+# ----------- TIMESTAMP CLEANING -----------
 
 df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s", errors="coerce")
 df = df.dropna(subset=["timestamp"])
