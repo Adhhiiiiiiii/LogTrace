@@ -43,7 +43,7 @@ def ip_to_geo(ip):
 # ----------- UI -----------
 
 st.set_page_config(page_title="Log Visualizer", layout="wide")
-st.title("🔍 Enhanced Log Visualizer & Analyzer")
+st.title("🔍 Log Visualizer & Analyzer")
 
 uploads = st.file_uploader("Upload .txt/.vlog files", ["txt", "vlog"], accept_multiple_files=True)
 use_demo = st.checkbox("Use Demo Mode")
