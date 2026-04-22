@@ -9,7 +9,7 @@ import requests
 
 # ----------- CONFIG -----------
 
-SAMPLE_DIR = "Sample Files"  # change to Sample_Files if you rename folder
+SAMPLE_DIR = "Sample Files"  # rename to Sample_Files if needed
 
 # ----------- Helper Functions -----------
 
@@ -45,14 +45,12 @@ def ip_to_geo(ip):
 st.set_page_config(page_title="Log Visualizer", layout="wide")
 st.title("🔍 Enhanced Log Visualizer & Analyzer")
 
-# ----------- INPUT SECTION -----------
-
 uploads = st.file_uploader("Upload .txt/.vlog files", ["txt", "vlog"], accept_multiple_files=True)
 use_demo = st.checkbox("Use Demo Mode")
 
 files_to_process = []
 
-# ----------- DEMO MODE -----------
+# ----------- INPUT HANDLING -----------
 
 if uploads:
     files_to_process = uploads
@@ -62,11 +60,10 @@ elif use_demo:
         sample_files = [f for f in os.listdir(SAMPLE_DIR) if f.endswith(".vlog")]
 
         if not sample_files:
-            st.error("No sample files found in Sample Files directory.")
+            st.error("No sample files found.")
             st.stop()
 
         selected_file = st.selectbox("Select a demo file", sample_files)
-
         file_path = os.path.join(SAMPLE_DIR, selected_file)
 
         with open(file_path, "r") as f:
@@ -95,9 +92,7 @@ for f in files_to_process:
         log_type = "VLOG"
         content = f.getvalue()
 
-    lines = content.splitlines()
-
-    for line in lines:
+    for line in content.splitlines():
         parsed = parse_line(line, log_type)
         if parsed["timestamp"]:
             data.append(parsed)
@@ -108,8 +103,28 @@ if df.empty:
     st.warning("No valid log entries found.")
     st.stop()
 
-df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
-st.success(f"Parsed {len(df)} log entries.")
+# ----------- TIMESTAMP CLEANING (CRITICAL FIX) -----------
+
+df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s", errors="coerce")
+df = df.dropna(subset=["timestamp"])
+
+if df.empty:
+    st.error("All timestamps invalid after parsing.")
+    st.stop()
+
+st.success(f"Parsed {len(df)} valid log entries.")
+
+# ----------- SAFE GROUPING -----------
+
+try:
+    ts_grp = (
+        df.groupby(pd.Grouper(key="timestamp", freq="10s"))
+        .size()
+        .reset_index(name="count")
+    )
+except Exception as e:
+    st.error(f"Timeline grouping failed: {e}")
+    st.stop()
 
 # ----------- TABS -----------
 
@@ -133,8 +148,6 @@ with tab1:
 
 with tab2:
     st.subheader("Event Timeline")
-
-    ts_grp = df.groupby(pd.Grouper(key="timestamp", freq="10S")).size().reset_index(name="count")
 
     fig = px.line(ts_grp, x="timestamp", y="count", title="Event Count")
     st.plotly_chart(fig)
@@ -164,8 +177,12 @@ with tab3:
     st.write("Isolation Forest anomalies:")
     st.dataframe(ts_grp[ts_grp["anomaly"] == -1])
 
-    fig2 = px.scatter(ts_grp, x="timestamp", y="count",
-                      color=ts_grp["anomaly"].map({1: "Normal", -1: "Anomaly"}))
+    fig2 = px.scatter(
+        ts_grp,
+        x="timestamp",
+        y="count",
+        color=ts_grp["anomaly"].map({1: "Normal", -1: "Anomaly"})
+    )
     st.plotly_chart(fig2)
 
 # ----------- GEO -----------
