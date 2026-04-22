@@ -1,15 +1,13 @@
-```python
 import streamlit as st
 import pandas as pd
 import re, io, json
-from datetime import datetime
 import matplotlib.pyplot as plt
 import plotly.express as px
 from sklearn.ensemble import IsolationForest
 from scipy import stats
 import requests
 
-# ----------- Helper Functions ----------- 
+# ----------- Helper Functions -----------
 
 def parse_line(line, log_type):
     ts = re.search(r"\[ts:(\d+)]", line)
@@ -18,7 +16,7 @@ def parse_line(line, log_type):
     ip = re.search(r"IP:([\d\.]+)", line)
     fn = re.search(r"=>/(.+)", line)
     pid = re.search(r"pid(\d+)", line)
-    
+
     return {
         "timestamp": int(ts.group(1)) if ts else None,
         "event_type": ev.group(1) if ev else None,
@@ -38,13 +36,12 @@ def ip_to_geo(ip):
     except:
         return None, None, None, None
 
-# ----------- Streamlit UI ----------- 
+# ----------- Streamlit UI -----------
 
 st.set_page_config(page_title="Log Visualizer", layout="wide")
-
 st.title("🔍 Enhanced Log Visualizer & Analyzer")
 
-# ----------- DEMO MODE + UPLOAD ----------- 
+# ----------- INPUT SECTION -----------
 
 uploads = st.file_uploader("Upload .txt/.vlog files", ["txt", "vlog"], accept_multiple_files=True)
 use_demo = st.checkbox("Use Demo Sample File")
@@ -67,7 +64,7 @@ else:
     st.info("Upload a file or enable demo mode.")
     st.stop()
 
-# ----------- PARSING ----------- 
+# ----------- PARSING -----------
 
 data = []
 
@@ -81,10 +78,10 @@ for f in files_to_process:
 
     lines = content.splitlines()
 
-    for L in lines:
-        p = parse_line(L, log_type)
-        if p["timestamp"]:
-            data.append(p)
+    for line in lines:
+        parsed = parse_line(line, log_type)
+        if parsed["timestamp"]:
+            data.append(parsed)
 
 df = pd.DataFrame(data)
 
@@ -93,10 +90,9 @@ if df.empty:
     st.stop()
 
 df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
-
 st.success(f"Parsed {len(df)} log entries.")
 
-# ----------- TABS ----------- 
+# ----------- TABS -----------
 
 tab1, tab2, tab3, tab4 = st.tabs([
     "📋 Summary Report",
@@ -105,17 +101,16 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "🌍 Geo-location"
 ])
 
-# ----------- SUMMARY ----------- 
+# ----------- SUMMARY -----------
 
 with tab1:
     st.subheader("Log Summary")
-
     st.write(f"Total Events: {len(df)}")
     st.write(f"Unique Users: {df['user'].nunique()}")
     st.write(f"Unique Event Types: {df['event_type'].nunique()}")
     st.write(f"Unique IPs: {df['ip'].nunique()}")
 
-# ----------- TIMELINE ----------- 
+# ----------- TIMELINE -----------
 
 with tab2:
     st.subheader("Event Timeline")
@@ -134,7 +129,7 @@ with tab2:
 
     st.download_button("Download Timeline PNG", buf.getvalue(), "timeline.png")
 
-# ----------- ANOMALIES ----------- 
+# ----------- ANOMALIES -----------
 
 with tab3:
     st.subheader("Anomaly Detection")
@@ -150,10 +145,11 @@ with tab3:
     st.write("Isolation Forest anomalies:")
     st.dataframe(ts_grp[ts_grp["anomaly"] == -1])
 
-    fig2 = px.scatter(ts_grp, x="timestamp", y="count", color=ts_grp["anomaly"].map({1:"Normal",-1:"Anomaly"}))
+    fig2 = px.scatter(ts_grp, x="timestamp", y="count",
+                      color=ts_grp["anomaly"].map({1: "Normal", -1: "Anomaly"}))
     st.plotly_chart(fig2)
 
-# ----------- GEO ----------- 
+# ----------- GEO -----------
 
 with tab4:
     st.subheader("Geo-location")
@@ -190,7 +186,7 @@ with tab4:
     else:
         st.info("No geo data available.")
 
-# ----------- EXPORT ----------- 
+# ----------- EXPORT -----------
 
 st.subheader("Export Data")
 
@@ -200,11 +196,16 @@ df_export = df.copy()
 df_export["timestamp"] = df_export["timestamp"].astype(str)
 
 if opt == "JSON":
-    st.download_button("Download JSON", json.dumps(df_export.to_dict("records"), indent=2), "logs.json")
+    st.download_button("Download JSON",
+                       json.dumps(df_export.to_dict("records"), indent=2),
+                       "logs.json")
 
 elif opt == "CSV":
-    st.download_button("Download CSV", df_export.to_csv(index=False), "logs.csv")
+    st.download_button("Download CSV",
+                       df_export.to_csv(index=False),
+                       "logs.csv")
 
 else:
-    st.download_button("Download TXT", df_export.to_string(index=False), "logs.txt")
-```
+    st.download_button("Download TXT",
+                       df_export.to_string(index=False),
+                       "logs.txt")
