@@ -109,9 +109,3 @@ This tool provides:
 
 ### 🔹 **Geo-location**
 ![Geo-location](./screenshot/Geo-location.jpeg)
-
-
-
-- GitHub: [@Adhhiiiiiiii](https://github.com/Adhhiiiiiiii)
-- Email: [adhiyaman.b@outlook.com](mailto:adhiyaman.b@outlook.com)
-
